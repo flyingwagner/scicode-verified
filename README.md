@@ -14,7 +14,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2608.04975-b31b1b.svg)](https://arxiv.org/abs/2608.04975)
 [![Hugging Face](https://img.shields.io/badge/Hugging_Face-Dataset-FFD21E)](https://huggingface.co/datasets/shhu2001/SciCode-Verified)
-[![Dataset](https://img.shields.io/badge/dataset-v2-4c6ef5)](https://github.com/flyingwagner/scicode-verified/releases/tag/data)
+[![Dataset](https://img.shields.io/badge/dataset-v2.1-4c6ef5)](scicode_verified/manifest.json)
 [![Problems](https://img.shields.io/badge/problems-64-7950f2)](scicode_verified/problems_test.jsonl)
 [![Scored subproblems](https://img.shields.io/badge/scored_subproblems-287-9c36b5)](scicode_verified/manifest.json)
 [![License](https://img.shields.io/badge/license-Apache--2.0-2f9e44)](eval_clean/vendor/LICENSE)
@@ -23,6 +23,10 @@
 
 ## News
 
+- **November 2026 — v2.1:** Step **62.5** now checks that `H`, `conn_Sz`, and
+  `conn_Sp` share one consistent unitary change of basis, in addition to the existing
+  checks. Prompts, gold targets, and all other tests are unchanged. See the
+  [change record](ledger/R8.jsonl) and [version notes](scicode_verified/README.md#v21-test-only-update).
 - **August 2026:** The [SciCode-Verified paper](https://arxiv.org/abs/2608.04975) is now on arXiv,
   and the versioned `v2` benchmark data is available on
   [Hugging Face](https://huggingface.co/datasets/shhu2001/SciCode-Verified).
@@ -51,6 +55,9 @@ downstream and erase an otherwise correct solution. The audit found this score-s
 failure mode in **58 of 64 main problems**.
 
 ## Matched re-evaluation
+
+The figure below reports the manuscript's **v2** evaluation. The v2.1 change is a
+separate test-only revision; use versioned regrading summaries when comparing results.
 
 <img src="assets/paper-before-after.png" width="100%" alt="Paper figure comparing original SciCode and SciCode-Verified accuracy for twelve frontier model snapshots">
 

@@ -25,7 +25,7 @@ TARG = os.path.join(VDIR, 'targets')
 JSONL = os.path.join(VDIR, 'problems_test.jsonl')
 H5 = os.path.join(VDIR, 'test_data_cleaned.h5')
 MANIFEST = os.path.join(VDIR, 'manifest.json')
-VERSION = os.environ.get('DATASET_VERSION', 'v2')
+VERSION = os.environ.get('DATASET_VERSION', 'v2.1')
 
 
 def md5_file(p):

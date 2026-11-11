@@ -1,6 +1,6 @@
 # SciCode-Verified dataset
 
-This directory contains the source of truth and the derived v2 release for the corrected
+This directory contains the source of truth and the derived v2.1 release for the corrected
 SciCode test benchmark.
 
 ## Release snapshot
@@ -12,11 +12,54 @@ SciCode test benchmark.
 | Scored subproblems | 287 |
 | Problem files changed from upstream | 63 |
 | Problems with target patches | 39 |
-| Dataset version | v2 |
+| Dataset version | v2.1 |
 
 The three unscored subproblems (`13.6`, `62.1`, and `76.3`) are official SciCode skip steps. Their
 reference implementations are inserted into the cumulative program for later steps, but they are
 not generated or counted.
+
+## v2.1 test-only update
+
+Only step **62.5** changes from v2. Its test now requires the Hamiltonian and both
+connection operators to be jointly related to the reference by one unitary basis
+transformation. Comparing their spectra separately is not sufficient to enforce
+this consistency. The existing energy, block-metadata, and spectral checks remain.
+The new check retains `np.allclose` tolerances `rtol=1e-5`, `atol=1e-8` and applies
+to this test's fixed four-dimensional, untruncated operator tuple.
+
+The solver-visible prompts, function signatures, all gold targets, and all other
+subproblem tests are unchanged. The v2 HDF5 download remains valid; its MD5 is
+still `2b41a7df40ddc23ce651ec05b8ecb6f8`. The regenerated JSONL and manifest identify
+the new version. The old `data` GitHub Release remains the historical v2 snapshot;
+use the JSONL/manifest from the current checkout or the matching Hugging Face version.
+
+For existing model runs, preserve generated `*.code.py` files and regrade **62.5
+only**, then recompute subproblem/main-problem totals from the saved verdicts.
+Merely resuming a run will reuse cached verdicts and does not apply the new test.
+[`tools/regrade_joint_basis_62_5.py`](../tools/regrade_joint_basis_62_5.py) compares
+old and new checks on the same cached output under the supplied environments and
+writes versioned summaries separately, without overwriting old scores or making
+model API calls. Its source documents the command-line options.
+
+The exact before/after test and rationale are recorded in
+[`ledger/R8.jsonl`](../ledger/R8.jsonl). Regression tests can be run without the
+large HDF5 file:
+
+```bash
+python -m unittest discover -s tests -p 'test_joint_basis_62_5.py' -v
+```
+
+Validation on saved outputs: all **37** available complete 62.5 programs were
+executed under both existing scientific-Python environments (NumPy 1.26.4 /
+SciPy 1.13.1 and NumPy 2.4.2 / SciPy 1.17.1). Old and new checks received the same
+returned tuple within each execution. All 37 old/new OR verdicts agreed (30 pass,
+7 fail). For the **36** runs with complete historical grading, both subproblem
+and main-problem totals were unchanged after replacing only the 62.5 verdict.
+The remaining generated-only run passed both checks but has no full-score baseline.
+This audit includes background/no-background settings, repeated runs, and six
+legacy runs; it involved no new model generations. Synthetic regression tests
+additionally accept 50 common unitary changes of basis and reject 50 inconsistent
+operator-basis constructions that the previous separate-spectrum check accepted.
 
 ## Files
 
