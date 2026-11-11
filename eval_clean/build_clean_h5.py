@@ -100,6 +100,19 @@ with h5py.File(OUT, 'a') as f:
     for step in sorted(transforms, key=skey):
         spec = transforms[step]
 
+        # --- 55.4: frozen arrays at the prescribed terminal time (10000 steps).
+        # Stripe flags/modes and every other target remain untouched.
+        if spec.get('_type') == 'swift_hohenberg_fixed_time_arrays':
+            assert step == '55.4'
+            import importlib.util
+            ref_path = os.path.join(ROOT, 'scicode_verified', 'refs', 'p55_ref.py')
+            rspec = importlib.util.spec_from_file_location('p55_ref', ref_path)
+            ref = importlib.util.module_from_spec(rspec)
+            rspec.loader.exec_module(ref)
+            ref.apply_frozen_arrays(f, spec, ROOT)
+            print('  transform 55.4: loaded six frozen (u, Sk) pairs at 10000 steps; stripe targets unchanged')
+            continue
+
         # --- 13.9: regenerate derivatives target with the corrected A_z inner-boundary parity ---
         if spec.get('_type') == 'maxwell_az_parity_fix':
             import importlib.util

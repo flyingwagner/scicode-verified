@@ -1,0 +1,53 @@
+{
+ "problem_id": "55",
+ "targets": {
+  "55.4": {
+   "_transform": true,
+   "_type": "swift_hohenberg_fixed_time_arrays",
+   "file": "scicode_verified/refs/p55_targets_10000.npz",
+   "sha256": "6601f4d39ea12f1ec6451a1b4e7e8f919b53bc69d2b2adb6a8d251277d258b05",
+   "steps": 10000,
+   "dt": 0.005,
+   "T": 50,
+   "dx": 1,
+   "seed": 42,
+   "dtype": "float64",
+   "cases": [
+    {
+     "N": 100,
+     "epsilon": 0.7,
+     "q0": 0.5
+    },
+    {
+     "N": 100,
+     "epsilon": 0.2,
+     "q0": 0.5
+    },
+    {
+     "N": 100,
+     "epsilon": -0.5,
+     "q0": 0.5
+    },
+    {
+     "N": 200,
+     "epsilon": 0.7,
+     "q0": 0.4
+    },
+    {
+     "N": 200,
+     "epsilon": 0.7,
+     "q0": 1
+    },
+    {
+     "N": 200,
+     "epsilon": 0.7,
+     "q0": 2
+    }
+   ]
+  }
+ },
+ "_rounds": [
+  "R9"
+ ],
+ "note": "v2.2: replace only 55.4 field/structure-factor targets by the prescribed mixed split scheme at exactly T=50 (10000 integer steps); retain stripe flags/modes. Frozen arrays are the exact candidates used in the 37-run paired diagnostic. Original v2 gold corresponded to 9999 steps. Numerical recipe: refs/p55_ref.py; source reference used NumPy 2.4.2."
+}

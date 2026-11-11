@@ -6,7 +6,7 @@
 
 [Paper](https://arxiv.org/abs/2608.04975) ·
 [Dataset](https://huggingface.co/datasets/shhu2001/SciCode-Verified) ·
-[GitHub data release](https://github.com/flyingwagner/scicode-verified/releases/tag/data) ·
+[Historical v2 data](https://github.com/flyingwagner/scicode-verified/releases/tag/data) ·
 [Run the benchmark](#run-it) ·
 [Evaluation protocol](#evaluation-protocol) ·
 [Audit trail](CLEANING_LOG.md) ·
@@ -14,7 +14,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2608.04975-b31b1b.svg)](https://arxiv.org/abs/2608.04975)
 [![Hugging Face](https://img.shields.io/badge/Hugging_Face-Dataset-FFD21E)](https://huggingface.co/datasets/shhu2001/SciCode-Verified)
-[![Dataset](https://img.shields.io/badge/dataset-v2.1-4c6ef5)](scicode_verified/manifest.json)
+[![Dataset](https://img.shields.io/badge/dataset-v2.2-4c6ef5)](scicode_verified/manifest.json)
 [![Problems](https://img.shields.io/badge/problems-64-7950f2)](scicode_verified/problems_test.jsonl)
 [![Scored subproblems](https://img.shields.io/badge/scored_subproblems-287-9c36b5)](scicode_verified/manifest.json)
 [![License](https://img.shields.io/badge/license-Apache--2.0-2f9e44)](eval_clean/vendor/LICENSE)
@@ -23,6 +23,12 @@
 
 ## News
 
+- **November 2026 — v2.2:** Step **55.4** now checks the returned field and spectrum
+  against the prescribed 10000-step reference, with `atol=rtol=5e-9`, retaining the
+  stripe checks. Only these two target arrays per case were replaced. All 27 checked
+  with-background runs are unchanged; five scored no-background runs lose one
+  subproblem each, with no main-problem changes. See the
+  [version notes and limitations](scicode_verified/README.md#v22-field-and-spectrum-checks).
 - **November 2026 — v2.1:** Step **62.5** now checks that `H`, `conn_Sz`, and
   `conn_Sp` share one consistent unitary change of basis, in addition to the existing
   checks. Prompts, gold targets, and all other tests are unchanged. See the
@@ -56,8 +62,8 @@ failure mode in **58 of 64 main problems**.
 
 ## Matched re-evaluation
 
-The figure below reports the manuscript's **v2** evaluation. The v2.1 change is a
-separate test-only revision; use versioned regrading summaries when comparing results.
+The figure below reports the manuscript's **v2** evaluation. Later verifier revisions
+are documented separately; use matching dataset versions and regrading summaries.
 
 <img src="assets/paper-before-after.png" width="100%" alt="Paper figure comparing original SciCode and SciCode-Verified accuracy for twelve frontier model snapshots">
 
@@ -94,18 +100,15 @@ Download the released grading targets from Hugging Face and verify their checksu
 ```bash
 hf download shhu2001/SciCode-Verified test_data_cleaned.h5 \
   --repo-type dataset \
+  --revision v2.2 \
   --local-dir scicode_verified
 md5sum scicode_verified/test_data_cleaned.h5
-# 2b41a7df40ddc23ce651ec05b8ecb6f8
+# 32c5602f2bf08393f917f03ff0b80d40
 ```
 
-The same file is mirrored in GitHub Releases:
-
-```bash
-gh release download data --repo flyingwagner/scicode-verified --dir scicode_verified
-md5sum scicode_verified/test_data_cleaned.h5
-# 2b41a7df40ddc23ce651ec05b8ecb6f8
-```
+The GitHub [`data` release](https://github.com/flyingwagner/scicode-verified/releases/tag/data)
+retains the historical **v2** targets. They are not interchangeable with the v2.2 HDF5;
+download the matching version above for the current checkout.
 
 Run a one-problem smoke test:
 
@@ -154,9 +157,10 @@ before/after evaluation above.
 | [`ledger/`](ledger/) | Per-change provenance and focused defect investigations |
 | [`tools/`](tools/) | Dataset assembly and release verification gate |
 
-The large `test_data_cleaned.h5` is distributed through the
-[Hugging Face dataset](https://huggingface.co/datasets/shhu2001/SciCode-Verified) and mirrored in
-[GitHub Releases](https://github.com/flyingwagner/scicode-verified/releases/tag/data), not Git.
+The current `test_data_cleaned.h5` is distributed through the
+[Hugging Face dataset](https://huggingface.co/datasets/shhu2001/SciCode-Verified), not Git.
+[GitHub Releases](https://github.com/flyingwagner/scicode-verified/releases/tag/data)
+retain the historical v2 artifact.
 The evaluator verifies its hash before running.
 
 ## Attribution

@@ -21,12 +21,11 @@ python -m pip install --upgrade pip
 python -m pip install openai h5py numpy scipy matplotlib sympy
 ```
 
-Download the v2 release before evaluating:
+Download the v2.2 grading targets before evaluating the current dataset:
 
 ```bash
-gh release download data \
-  --repo flyingwagner/scicode-verified \
-  --dir scicode_verified
+hf download shhu2001/SciCode-Verified test_data_cleaned.h5 \
+  --repo-type dataset --revision v2.2 --local-dir scicode_verified
 ```
 
 ## Minimal run
@@ -156,7 +155,7 @@ pass/fail decision and the per-environment verdicts.
 
 | Script | Purpose |
 |---|---|
-| `build_clean_h5.py` | Rebuild the corrected HDF5 from upstream data and 39 target patches |
+| `build_clean_h5.py` | Rebuild the corrected HDF5 from upstream data and 40 target patches |
 | `regrade_multienv.py` | Re-score cached generations in explicitly selected environments |
 | `regrade_fixed_output.py` | Cross-grade original-run outputs against corrected tests and targets |
 | `run_cleaned_eval.sh` | Compatibility wrapper for an upstream SciCode `inspect_ai` checkout |
