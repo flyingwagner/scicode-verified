@@ -92,7 +92,7 @@ git clone https://github.com/flyingwagner/scicode-verified.git
 cd scicode-verified
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -U pip openai h5py numpy scipy matplotlib sympy
+python -m pip install -U pip openai h5py numpy scipy matplotlib sympy huggingface_hub
 ```
 
 Download the released grading targets from Hugging Face and verify their checksum:

@@ -18,7 +18,7 @@ From the repository root:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install openai h5py numpy scipy matplotlib sympy
+python -m pip install openai h5py numpy scipy matplotlib sympy huggingface_hub
 ```
 
 Download the v2.2 grading targets before evaluating the current dataset:
